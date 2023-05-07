@@ -3,11 +3,11 @@ import time
 def solve_sudoku(board):
     
     def solve(curr_board):
-        def zero_cell():         
+        def zero_cell(): # find next empty cell
             return next(((row, col) for row in range(9) for col in range(9) if curr_board[row][col] == 0), None)
             
         
-        def allowed(row, col, num):
+        def allowed(row, col, num): # check validity
             for i in range(9):
                 if curr_board[row][i] == num or curr_board[i][col] == num or curr_board[(row // 3) * 3 + i // 3][(col // 3) * 3 + i % 3] == num:
                     return False
@@ -20,17 +20,17 @@ def solve_sudoku(board):
         
         possible_vals = [1,2,3,4,5,6,7,8,9]
         
-        # remove values from set based on row
+        # row check
         for i in range(9):
             if board[row][i] in possible_vals:
                 possible_vals.remove(board[row][i])
         
-        # remove values from set based on column
+        # col check
         for i in range(9):
             if board[i][col] in possible_vals:
                 possible_vals.remove(board[i][col])
         
-        # remove values from set based on 3x3 square
+        # 3x3 square check
         for i in range((row // 3) * 3, (row // 3) * 3 + 3):
             for j in range((col // 3) * 3, (col // 3) * 3 + 3):
                 if board[i][j] in possible_vals:
